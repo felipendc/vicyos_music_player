@@ -2,12 +2,19 @@
 import pygame
 import os
 import tkinter as tk
+from enum import Enum
 
-repeat_song = 0  # This feature will be implemented in the future!
+repeat_song = "playlist"
 pause_music = False
 stop_music = False
 music_folder_path = []
 song_index = 0
+
+repeat_options = {
+    'CURRENT': "current",
+    'PLAYLIST': "playlist",
+    'NONE': "none",
+}
 
 
 def init_music_player():
@@ -46,9 +53,13 @@ def next_song():
         pygame.mixer.music.load(music_folder_path[song_index])
         pygame.mixer.music.play()
     elif song_index >= len(music_folder_path) - 1:
+        if repeat_song == "none":
+            pass
+    elif song_index >= len(music_folder_path) - 1:
         song_index = 0
         pygame.mixer.music.load(music_folder_path[song_index])
         pygame.mixer.music.play()
+
 
 def previous_song():
     global song_index
@@ -93,15 +104,30 @@ def check_music():
     else:
         print("There is a song being played at the moment...")
 
-def music_has_finished(root):
-    global music_folder_path
+def repeat_checker(root):
+    global music_folder_path, repeat_song
 
     if not pygame.mixer.music.get_busy() and pause_music == False:
-        if len(music_folder_path) > 0 and not stop_music:
-            next_song()
-    elif not pygame.mixer.music.get_busy() and pause_music == True:
-        print("The song is currently paused!")
-    else:
-        print("Playing: " + music_folder_path[song_index])
+        if repeat_song == "playlist":
+            if len(music_folder_path) > 0 and not stop_music:
+                next_song()
+            print("REPEAT_PLAYLIST")
 
-    root.after(1000, lambda: music_has_finished(root))
+        elif repeat_song == "current":
+            if len(music_folder_path) > 0:
+                pygame.mixer.music.load(music_folder_path[song_index])
+                pygame.mixer.music.play()
+            print("REPEAT_CURRENT")
+
+        elif repeat_song == "none":
+            if len(music_folder_path) > 0:
+                pass
+                # if song_index >= len(music_folder_path) - 1:
+            print("REPEAT_NONE")
+
+        # elif not pygame.mixer.music.get_busy() and pause_music == True:
+        #     print("The song is currently paused!")
+        # else:
+        #     print("Playing: " + music_folder_path[song_index])
+
+    root.after(1000, lambda: repeat_checker(root))

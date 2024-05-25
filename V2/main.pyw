@@ -46,5 +46,5 @@ next_button.pack(pady=20)
 previous_button = tk.Button(root, text="Next", command=on_next_song, state=tk.DISABLED)
 previous_button.pack(pady=20)
 
-root.after(1000, lambda: music_player.music_has_finished(root))
+root.after(1000, lambda: music_player.repeat_checker(root))
 root.mainloop()
