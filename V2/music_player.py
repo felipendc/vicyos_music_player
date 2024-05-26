@@ -2,7 +2,6 @@
 import pygame
 import os
 import tkinter as tk
-from enum import Enum
 
 repeat_song = "playlist"
 pause_music = False
