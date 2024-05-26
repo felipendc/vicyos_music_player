@@ -53,9 +53,6 @@ def next_song():
         pygame.mixer.music.load(music_folder_path[song_index])
         pygame.mixer.music.play()
     elif song_index >= len(music_folder_path) - 1:
-        if repeat_song == "none":
-            pass
-    elif song_index >= len(music_folder_path) - 1:
         song_index = 0
         pygame.mixer.music.load(music_folder_path[song_index])
         pygame.mixer.music.play()
