@@ -23,17 +23,56 @@ def init_music_player():
     pygame.mixer.init()
 
 
-def selected_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, is_play_button, repeat_button, select_folder_button):
+def open_songs(filedialog, play_pause_button, stop_button, next_button, previous_button, is_play_button, repeat_button, select_folder_button):
     global music_folder_path, song_index
+
+    dialog_title = "Select a Directory"
+    initial_directory = os.path.expanduser("~/Music")
+    supported_extensions = ["*.m4a*", "*.mp3*"]
+    
+    selected_songs = filedialog.askopenfilenames(
+        initialdir=initial_directory,
+        filetypes=[(".mp3", "*.mp3"), (".m4a", "*.m4a*"), ("All files", supported_extensions)],
+        title=dialog_title
+    )
+
+    music_folder_path = selected_songs
+    
+    if len(music_folder_path) > 0:
+        print(music_folder_path)
+        song_index = 0
+        on_button_stop(play_pause_button)
+        on_button_play_or_pause(play_pause_button)
+        play_pause_button.configure(state=ctk.NORMAL)
+        stop_button.configure(state=ctk.NORMAL)
+        next_button.configure(state=ctk.NORMAL)
+        previous_button.configure(state=ctk.NORMAL)
+        is_play_button.configure(state=ctk.NORMAL)
+        repeat_button.configure(state=ctk.NORMAL)
+        select_folder_button.configure(fg_color="#444444", hover_color="#555555",)
+    else:
+        pass
+
+
+def open_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, is_play_button, repeat_button, select_folder_button):
+    global music_folder_path, song_index
+
+    suported_files_extensions = [".mp3", ".m4a"]
     directory = filedialog.askdirectory()
+
     if directory:
         music_folder_path.clear()  # Empty the current playlist
+
         for root_, dirs, files in os.walk(directory):
             for file in files:
-                if os.path.splitext(file)[1] == ".mp3":
-                    path = (root_ + "/" + file).replace("\\", "/")
-                    music_folder_path.append(path)
+                for suported_extensions in suported_files_extensions:
+                    print(suported_extensions)
+                    if os.path.splitext(file)[1].lower() == suported_extensions:
+                        path = (root_ + "/" + file).replace("\\", "/")
+                        music_folder_path.append(path)
+                    
         if len(music_folder_path) > 0:
+            print(music_folder_path)
             song_index = 0
             on_button_stop(play_pause_button)
             on_button_play_or_pause(play_pause_button)
@@ -46,7 +85,6 @@ def selected_folder(filedialog, play_pause_button, stop_button, next_button, pre
             select_folder_button.configure(fg_color="#444444", hover_color="#555555",)
     else:
         pass
-
 
 def next_song():
     global song_index

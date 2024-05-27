@@ -7,7 +7,7 @@ import music_player
 music_player.init_music_player()
 
 def on_select_folder():
-    music_player.selected_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, is_play_button, repeat_button, select_folder_button)
+    music_player.open_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, is_play_button, repeat_button, select_folder_button)
 
 def on_play_or_pause():
     music_player.on_button_play_or_pause(play_pause_button)
