@@ -99,13 +99,14 @@ def open_folder(filedialog, play_pause_button, stop_button, next_button, previou
         pass
 
 
-def next_song(next_button):
+def next_song():
     global song_index
     if song_index < len(music_folder_path) - 1:
         song_index += 1
         media = instance.media_new(music_folder_path[song_index])
         player.set_media(media)
         player.play()
+        pause_music == False
 
     elif song_index >= len(music_folder_path) - 1 and repeat_song == repeat_options["PLAYLIST"]:
         song_index = 0
@@ -177,6 +178,9 @@ def repeat_checker(root, play_pause_button, next_button, previous_button):
     global music_folder_path, repeat_song
     print(pause_music)
     print(repeat_song)
+
+    if player.get_state() == vlc.State.Playing:
+        play_pause_button.configure(text="Pause")
 
     if song_index == 0:
         previous_button.configure(state=ctk.DISABLED)

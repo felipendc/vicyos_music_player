@@ -26,7 +26,7 @@ def on_stop():
     music_player.on_button_stop(play_pause_button)
 
 def on_next_song():
-    music_player.next_song(next_button)
+    music_player.next_song()
 
 def on_previous_song():
     music_player.previous_song(next_button)
