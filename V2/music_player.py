@@ -4,18 +4,17 @@ import os
 import customtkinter as ctk
 
 
-repeat_song = "none"
-pause_music = False
-stop_music = False
-music_folder_path = []
-song_index = 0
-
-
 repeat_options = {
     'NONE': "none",
     'CURRENT': "current",
     'PLAYLIST': "playlist",
 }
+
+repeat_song = repeat_options["NONE"]
+pause_music = False
+stop_music = False
+music_folder_path = []
+song_index = 0
 
 
 def init_music_player():
