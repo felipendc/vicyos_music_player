@@ -26,10 +26,10 @@ def on_stop():
     music_player.on_button_stop(play_pause_button)
 
 def on_next_song():
-    music_player.next_song(next_button)
+    music_player.next_song()
 
 def on_previous_song():
-    music_player.previous_song(next_button)
+    music_player.previous_song()
 
 def on_check_music():
     music_player.check_music()
@@ -48,30 +48,30 @@ def optionmenu_callback(choice):
 ctk.set_appearance_mode("dark") # Set dark mode theme globally
 root = ctk.CTk()
 root.title("Vicyos Music Player")
-root.geometry("300x500")
+root.geometry("300x550")
 
 
 play_pause_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Start Playing the song", command=on_play_or_pause, state=ctk.DISABLED)
-play_pause_button.pack(pady=17)
+play_pause_button.pack(pady=20)
 
 stop_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Stop", command=on_stop, state=ctk.DISABLED)
-stop_button.pack(pady=17)
+stop_button.pack(pady=20)
 
 is_play_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Is there anything playing?", command=on_check_music, state=ctk.DISABLED)
-is_play_button.pack(pady=17)
+is_play_button.pack(pady=20)
 
 open_files_default = ctk.StringVar(value="Open Folder")
 open_files_option_menu = ctk.CTkOptionMenu(root, values=["Open Folder", "Open File(s)"], variable=open_files_default, command=optionmenu_callback)
-open_files_option_menu.pack(pady=17)
+open_files_option_menu.pack(pady=20)
 
-next_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Next", command=on_next_song, state=ctk.DISABLED)
-next_button.pack(pady=17)
+next_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Previous", command=on_previous_song, state=ctk.DISABLED)
+next_button.pack(pady=20)
 
-previous_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Previous", command=on_previous_song, state=ctk.DISABLED)
-previous_button.pack(pady=17)
+previous_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Next", command=on_next_song, state=ctk.DISABLED)
+previous_button.pack(pady=20)
 
 repeat_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Repeat mode: Off", command=on_repeat_button_label, state=ctk.DISABLED)
-repeat_button.pack(pady=17)
+repeat_button.pack(pady=20)
 
-root.after(1000, lambda: music_player.repeat_checker(root, play_pause_button, next_button, previous_button))
+root.after(1000, lambda: music_player.repeat_checker(root, play_pause_button))
 root.mainloop()
