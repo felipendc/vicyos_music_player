@@ -26,7 +26,7 @@ def init_music_player():
     player = instance.media_player_new()
 
 
-def open_songs(filedialog, play_pause_button, stop_button, next_button, previous_button, is_play_button, repeat_button, select_folder_button):
+def open_songs(filedialog, play_pause_button, stop_button, next_button, previous_button, is_play_button, repeat_button, open_files_option_menu):
     global music_folder_path, song_index
 
     dialog_title = "Select a Directory"
@@ -35,7 +35,7 @@ def open_songs(filedialog, play_pause_button, stop_button, next_button, previous
     
     selected_songs = filedialog.askopenfilenames(
         initialdir=initial_directory,
-        filetypes=[(".mp3", "*.mp3"), (".m4a", "*.m4a*"), ("All files", supported_extensions)],
+        filetypes=[("All files", supported_extensions), (".mp3", "*.mp3"), (".m4a", "*.m4a*")],
         title=dialog_title
     )
 
@@ -52,12 +52,12 @@ def open_songs(filedialog, play_pause_button, stop_button, next_button, previous
         previous_button.configure(state=ctk.NORMAL)
         is_play_button.configure(state=ctk.NORMAL)
         repeat_button.configure(state=ctk.NORMAL)
-        select_folder_button.configure(fg_color="#444444", hover_color="#555555",)
+        open_files_option_menu.configure( fg_color=("#666666"), button_color="#444444", button_hover_color="#888888",)
     else:
         pass
 
 
-def open_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, is_play_button, repeat_button, select_folder_button):
+def open_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, is_play_button, repeat_button, open_files_option_menu):
     global music_folder_path, song_index
 
     suported_files_extensions = [".mp3", ".m4a"]
@@ -85,7 +85,7 @@ def open_folder(filedialog, play_pause_button, stop_button, next_button, previou
             previous_button.configure(state=ctk.NORMAL)
             is_play_button.configure(state=ctk.NORMAL)
             repeat_button.configure(state=ctk.NORMAL)
-            select_folder_button.configure(fg_color="#444444", hover_color="#555555",)
+            open_files_option_menu.configure( fg_color=("#666666"), button_color="#444444", button_hover_color="#888888",)
     else:
         pass
 
@@ -188,3 +188,4 @@ def repeat_button_label(repeat_button):
         repeat_button.configure(text="Repeat mode: Off")
         repeat_song = repeat_options["NONE"]
         print(repeat_song) # Printing to debug the code!
+
