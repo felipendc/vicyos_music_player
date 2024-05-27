@@ -5,10 +5,11 @@ import customtkinter as ctk
 
 
 repeat_options = {
-    'NONE': "none",
-    'CURRENT': "current",
-    'PLAYLIST': "playlist",
+    "NONE": "none",
+    "CURRENT": "current",
+    "PLAYLIST": "playlist",
 }
+
 
 repeat_song = repeat_options["NONE"]
 pause_music = False
@@ -29,8 +30,8 @@ def selected_folder(filedialog, play_pause_button, stop_button, next_button, pre
         music_folder_path.clear()  # Empty the current playlist
         for root_, dirs, files in os.walk(directory):
             for file in files:
-                if os.path.splitext(file)[1] == '.mp3':
-                    path = (root_ + '/' + file).replace('\\', '/')
+                if os.path.splitext(file)[1] == ".mp3":
+                    path = (root_ + "/" + file).replace("\\", "/")
                     music_folder_path.append(path)
         if len(music_folder_path) > 0:
             song_index = 0
@@ -104,16 +105,16 @@ def check_music():
 def repeat_checker(root, play_pause_button):
     global music_folder_path, repeat_song
     if not pygame.mixer.music.get_busy() and pause_music == False:
-        if repeat_song == "playlist":
+        if repeat_song == repeat_options["PLAYLIST"]:
             if len(music_folder_path) > 0 and not stop_music:
                 next_song()
             print(repeat_song) # Printing to debug the code!
-        elif repeat_song == "current":
+        elif repeat_song == repeat_options["CURRENT"]:
             if len(music_folder_path) > 0:
                 pygame.mixer.music.load(music_folder_path[song_index])
                 pygame.mixer.music.play()
             print(repeat_song) # Printing to debug the code!
-        elif repeat_song == "none":
+        elif repeat_song == repeat_options["NONE"]:
             if len(music_folder_path) > 0:
                 play_pause_button.configure(text="Play")
                 # play_pause_button.configure(text="Play")
