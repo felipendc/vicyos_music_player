@@ -3,16 +3,16 @@ import pygame
 import os
 import tkinter as tk
 
-repeat_song = "playlist"
+repeat_song = "none"
 pause_music = False
 stop_music = False
 music_folder_path = []
 song_index = 0
 
 repeat_options = {
+    'NONE': "none",
     'CURRENT': "current",
     'PLAYLIST': "playlist",
-    'NONE': "none",
 }
 
 
@@ -21,7 +21,7 @@ def init_music_player():
     pygame.mixer.init()
 
 
-def selected_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, is_play_button):
+def selected_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, is_play_button, repeat_button):
     global music_folder_path, song_index
 
     directory = filedialog.askdirectory()
@@ -42,6 +42,8 @@ def selected_folder(filedialog, play_pause_button, stop_button, next_button, pre
             next_button.config(state=tk.NORMAL)
             previous_button.config(state=tk.NORMAL)
             is_play_button.config(state=tk.NORMAL)
+            repeat_button.config(state=tk.NORMAL)
+
     else:
         pass
 
@@ -100,30 +102,45 @@ def check_music():
     else:
         print("There is a song being played at the moment...")
 
-def repeat_checker(root):
+def repeat_checker(root, play_pause_button):
     global music_folder_path, repeat_song
 
     if not pygame.mixer.music.get_busy() and pause_music == False:
         if repeat_song == "playlist":
             if len(music_folder_path) > 0 and not stop_music:
                 next_song()
-            print("REPEAT_PLAYLIST")
-
+            print(repeat_song) # Printing to debug the code!
         elif repeat_song == "current":
             if len(music_folder_path) > 0:
                 pygame.mixer.music.load(music_folder_path[song_index])
                 pygame.mixer.music.play()
-            print("REPEAT_CURRENT")
-
+            print(repeat_song) # Printing to debug the code!
         elif repeat_song == "none":
             if len(music_folder_path) > 0:
+                play_pause_button.config(text="Play")
+                # play_pause_button.config(text="Play")
                 pass
-                # if song_index >= len(music_folder_path) - 1:
-            print("REPEAT_NONE")
+            print(repeat_song) # Printing to debug the code!
+    root.after(1000, lambda: repeat_checker(root, play_pause_button))
+        
 
-        # elif not pygame.mixer.music.get_busy() and pause_music == True:
-        #     print("The song is currently paused!")
-        # else:
-        #     print("Playing: " + music_folder_path[song_index])
+def repeat_button_label(repeat_button):
+    global repeat_song
 
-    root.after(1000, lambda: repeat_checker(root))
+    if repeat_song == repeat_options["NONE"]:
+        print(repeat_song) # Printing to debug the code!
+        repeat_button.config(text="Repeat: Current song")
+        repeat_song = repeat_options["CURRENT"]
+        print(repeat_song) # Printing to debug the code!
+
+    elif repeat_song == repeat_options["CURRENT"]:
+        print(repeat_song) # Printing to debug the code!
+        repeat_button.config(text="Repeat: Playlist")
+        repeat_song = repeat_options["PLAYLIST"]
+        print(repeat_song) # Printing to debug the code!
+
+    elif repeat_song == repeat_options["PLAYLIST"]:
+        print(repeat_song) # Printing to debug the code!
+        repeat_button.config(text="Repeat mode: Off")
+        repeat_song = repeat_options["NONE"]
+        print(repeat_song) # Printing to debug the code!

@@ -7,7 +7,7 @@ import music_player
 music_player.init_music_player()
 
 def on_select_folder():
-    music_player.selected_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, is_play_button)
+    music_player.selected_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, is_play_button, repeat_button)
 
 def on_play_or_pause():
     music_player.on_button_play_or_pause(play_pause_button)
@@ -24,9 +24,13 @@ def on_previous_song():
 def on_check_music():
     music_player.check_music()
 
+def on_repeat_button_label():
+    music_player.repeat_button_label(repeat_button)
+
+
 root = tk.Tk()
 root.title("Vicyos Music Player")
-root.geometry("300x400")
+root.geometry("300x470")
 
 play_pause_button = tk.Button(root, text="Start Playing the song", command=on_play_or_pause, state=tk.DISABLED)
 play_pause_button.pack(pady=20)
@@ -46,5 +50,8 @@ next_button.pack(pady=20)
 previous_button = tk.Button(root, text="Next", command=on_next_song, state=tk.DISABLED)
 previous_button.pack(pady=20)
 
-root.after(1000, lambda: music_player.repeat_checker(root))
+repeat_button = tk.Button(root, text="Repeat mode: Off", command=on_repeat_button_label, state=tk.DISABLED)
+repeat_button.pack(pady=20)
+
+root.after(1000, lambda: music_player.repeat_checker(root, play_pause_button))
 root.mainloop()
