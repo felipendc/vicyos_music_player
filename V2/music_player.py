@@ -27,7 +27,7 @@ def init_music_player():
 
 
 
-def open_songs(filedialog, play_pause_button, stop_button, next_button, previous_button, is_play_button, repeat_button, open_files_option_menu):
+def open_songs(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu):
     global music_folder_path, song_index
 
     dialog_title = "Open"
@@ -56,14 +56,13 @@ def open_songs(filedialog, play_pause_button, stop_button, next_button, previous
             stop_button.configure(state=ctk.NORMAL)
             next_button.configure(state=ctk.NORMAL)
             previous_button.configure(state=ctk.NORMAL)
-            is_play_button.configure(state=ctk.NORMAL)
             repeat_button.configure(state=ctk.NORMAL)
             open_files_option_menu.configure( fg_color=("#666666"), button_color="#444444", button_hover_color="#888888",)
         else:
             pass
 
 
-def open_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, is_play_button, repeat_button, open_files_option_menu):
+def open_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu):
     global music_folder_path, song_index
 
     dialog_title = "Select a Directory"
@@ -92,7 +91,6 @@ def open_folder(filedialog, play_pause_button, stop_button, next_button, previou
             stop_button.configure(state=ctk.NORMAL)
             next_button.configure(state=ctk.NORMAL)
             previous_button.configure(state=ctk.NORMAL)
-            is_play_button.configure(state=ctk.NORMAL)
             repeat_button.configure(state=ctk.NORMAL)
             open_files_option_menu.configure( fg_color=("#666666"), button_color="#444444", button_hover_color="#888888",)
     else:

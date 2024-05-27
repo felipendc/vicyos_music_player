@@ -14,10 +14,10 @@ import music_player
 music_player.init_music_player()
 
 def on_select_folder():
-    music_player.open_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, is_play_button, repeat_button, open_files_option_menu)
+    music_player.open_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu)
 
 def on_select_songs():
-    music_player.open_songs(filedialog, play_pause_button, stop_button, next_button, previous_button, is_play_button, repeat_button, open_files_option_menu)
+    music_player.open_songs(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu)
 
 def on_play_or_pause():
     music_player.on_button_play_or_pause(play_pause_button)
@@ -48,7 +48,7 @@ def optionmenu_callback(choice):
 ctk.set_appearance_mode("dark") # Set dark mode theme globally
 root = ctk.CTk()
 root.title("Vicyos Music Player")
-root.geometry("300x500")
+root.geometry("300x400")
 
 
 play_pause_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Start Playing the song", command=on_play_or_pause, state=ctk.DISABLED)
@@ -56,9 +56,6 @@ play_pause_button.pack(pady=17)
 
 stop_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Stop", command=on_stop, state=ctk.DISABLED)
 stop_button.pack(pady=17)
-
-is_play_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Is there anything playing?", command=on_check_music, state=ctk.DISABLED)
-is_play_button.pack(pady=17)
 
 open_files_default = ctk.StringVar(value="Open Folder")
 open_files_option_menu = ctk.CTkOptionMenu(root, values=["Open Folder", "Open File(s)"], variable=open_files_default, command=optionmenu_callback)
