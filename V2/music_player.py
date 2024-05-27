@@ -1,6 +1,5 @@
 # music_player.py
-import pygame
-import os
+import vlc, os
 import customtkinter as ctk
 
 
@@ -19,8 +18,12 @@ song_index = 0
 
 
 def init_music_player():
-    pygame.init()
-    pygame.mixer.init()
+    # Creating VLC instance
+    global instance, player
+    instance = vlc.Instance()
+
+    # Creating VLC media player
+    player = instance.media_player_new()
 
 
 def open_songs(filedialog, play_pause_button, stop_button, next_button, previous_button, is_play_button, repeat_button, select_folder_button):
@@ -90,51 +93,57 @@ def next_song():
     global song_index
     if song_index < len(music_folder_path) - 1:
         song_index += 1
-        pygame.mixer.music.load(music_folder_path[song_index])
-        pygame.mixer.music.play()
+        media = instance.media_new(music_folder_path[song_index])
+        player.set_media(media)
+        player.play()
     elif song_index >= len(music_folder_path) - 1:
         song_index = 0
-        pygame.mixer.music.load(music_folder_path[song_index])
-        pygame.mixer.music.play()
+        media = instance.media_new(music_folder_path[song_index])
+        player.set_media(media)
+        player.play()
 
 
 def previous_song():
     global song_index
     if song_index > 0:
         song_index -= 1
-        pygame.mixer.music.load(music_folder_path[song_index])
-        pygame.mixer.music.play()
+        media = instance.media_new(music_folder_path[song_index])
+        player.set_media(media)
+        player.play()
     else:
         song_index = 0
 
 def on_button_play_or_pause(play_pause_button):
-    global pause_music, music_folder_path, stop_music
-    if not pygame.mixer.music.get_busy() and pause_music == False:
-        pygame.mixer.music.load(music_folder_path[song_index])
-        pygame.mixer.music.play()
+    global pause_music, music_folder_path, stop_music, instance
+    if player.get_state() != vlc.State.Ended and pause_music == False:
+        
+        media = instance.media_new(music_folder_path[song_index])
+        player.set_media(media)
+        player.play()
         stop_music = False
         play_pause_button.configure(text="Pause")
     elif pause_music == False:
-        pygame.mixer.music.pause()
+        player.pause()
         pause_music = True
         play_pause_button.configure(text="Play")
     elif pause_music == True:
-        pygame.mixer.music.unpause()
+        player.unpause()
         pause_music = False
         play_pause_button.configure(text="Pause")
 
 def on_button_stop(play_pause_button):
     global pause_music, stop_music
-    pygame.mixer.music.stop()
+    player.stop()
     pause_music = False
     stop_music = True
     play_pause_button.configure(text="Start Playing the song")
 
 def check_music():
     global music_folder_path
-    if not pygame.mixer.music.get_busy() and pause_music == False:
+    
+    if player.get_state() == vlc.State.Ended and pause_music == False:
         print("There is nothing being played at the moment...")
-    elif not pygame.mixer.music.get_busy() and pause_music == True:
+    elif player.get_state() == vlc.State.Ended and pause_music == True:
         print("The song is currently paused!")
     else:
         print("There is a song being played at the moment...")
@@ -142,21 +151,22 @@ def check_music():
 
 def repeat_checker(root, play_pause_button):
     global music_folder_path, repeat_song
-    if not pygame.mixer.music.get_busy() and pause_music == False:
+    if player.get_state() == vlc.State.Ended and pause_music == False:
         if repeat_song == repeat_options["PLAYLIST"]:
             if len(music_folder_path) > 0 and not stop_music:
                 next_song()
             print(repeat_song) # Printing to debug the code!
         elif repeat_song == repeat_options["CURRENT"]:
             if len(music_folder_path) > 0:
-                pygame.mixer.music.load(music_folder_path[song_index])
-                pygame.mixer.music.play()
+                media = instance.media_new(music_folder_path[song_index])
+                player.set_media(media)
+                player.play()
             print(repeat_song) # Printing to debug the code!
         elif repeat_song == repeat_options["NONE"]:
             if len(music_folder_path) > 0:
                 play_pause_button.configure(text="Play")
-                # play_pause_button.configure(text="Play")
                 pass
+
             print(repeat_song) # Printing to debug the code!
     root.after(1000, lambda: repeat_checker(root, play_pause_button))
         
