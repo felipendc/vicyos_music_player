@@ -32,6 +32,64 @@ def init_music_player():
     # Creating VLC media player
     player = instance.media_player_new()
 
+def add_to_playlist(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu):
+    global music_folder_path, song_index
+
+    dialog_title = "Open"
+    initial_directory = os.path.expanduser("~/Music")
+    supported_extensions = ["*.m4a*", "*.mp3*"]
+    
+    selected_songs = filedialog.askopenfilenames(
+        initialdir=initial_directory,
+        filetypes=[("All files", supported_extensions), (".mp3", "*.mp3"), (".m4a", "*.m4a*")],
+        title=dialog_title
+    )
+
+    playlist_is_empty = True
+    if len(music_folder_path) > 0:
+        playlist_is_empty = False
+    else:
+        playlist_is_empty = True
+
+    if not playlist_is_empty:
+
+        if not selected_songs:
+            print("NOTHING HAS BEEN SELECTED!")
+        else:
+            # Convert tuple to list
+            music_folder_path_to_list = list(music_folder_path)
+            selected_songs_to_list = list(selected_songs)
+            temp_list =[]
+            
+            for files in music_folder_path_to_list:
+                temp_list.append(files)
+
+            for files in selected_songs_to_list:
+                temp_list.append(files)
+            
+            music_folder_path = []
+            for files in temp_list:
+                music_folder_path.append(files)
+
+    else:
+        # Convert tuple to list
+        selected_songs_to_list = list(selected_songs)
+        for files in selected_songs_to_list:
+            music_folder_path.append(files)
+
+        print("PLAY LIST IS FULLY EMPTY")
+        song_index = 0
+        media = instance.media_new(music_folder_path[song_index])
+        player.set_media(media)
+        on_button_stop(play_pause_button)
+        on_button_play_or_pause(play_pause_button)
+        play_pause_button.configure(state=ctk.NORMAL)
+        stop_button.configure(state=ctk.NORMAL)
+        next_button.configure(state=ctk.NORMAL)
+        previous_button.configure(state=ctk.NORMAL)
+        repeat_button.configure(state=ctk.NORMAL)
+        open_files_option_menu.configure( fg_color=("#666666"), button_color="#444444", button_hover_color="#888888")
+
 
 
 def open_songs(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu):
@@ -64,7 +122,7 @@ def open_songs(filedialog, play_pause_button, stop_button, next_button, previous
             next_button.configure(state=ctk.NORMAL)
             previous_button.configure(state=ctk.NORMAL)
             repeat_button.configure(state=ctk.NORMAL)
-            open_files_option_menu.configure( fg_color=("#666666"), button_color="#444444", button_hover_color="#888888",)
+            open_files_option_menu.configure( fg_color=("#666666"), button_color="#444444", button_hover_color="#888888")
         else:
             pass
 

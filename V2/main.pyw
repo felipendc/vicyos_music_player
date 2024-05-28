@@ -19,6 +19,9 @@ def on_select_folder():
 def on_select_songs():
     music_player.open_songs(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu)
 
+def on_add_to_playlist():
+    music_player.add_to_playlist(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu)
+
 def on_play_or_pause():
     music_player.on_button_play_or_pause(play_pause_button)
 
@@ -42,6 +45,9 @@ def on_optionmenu_callback(choice):
         on_select_folder()
     elif choice == "Open File(s)":
         on_select_songs()
+    elif choice == "Add to Playlist":
+        print(choice)
+        on_add_to_playlist()
     print("optionmenu dropdown clicked:", choice)
 
 def on_speed_combobox_callback(choice):
@@ -65,7 +71,7 @@ stop_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", tex
 stop_button.pack(pady=16)
 
 open_files_default = ctk.StringVar(value="Open Folder")
-open_files_option_menu = ctk.CTkOptionMenu(root, values=["Open Folder", "Open File(s)"], variable=open_files_default, command=on_optionmenu_callback)
+open_files_option_menu = ctk.CTkOptionMenu(root, values=["Open Folder", "Open File(s)", "Add to Playlist"], variable=open_files_default, command=on_optionmenu_callback)
 open_files_option_menu.pack(pady=16)
 
 next_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Next", command=on_next_song, state=ctk.DISABLED)
