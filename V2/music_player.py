@@ -105,20 +105,18 @@ def next_song(play_pause_button):
         player.set_media(media)
         player.play()
         pause_music == False
-        play_pause_button.configure(text="Pause")
+        if not play_pause_button.configure(text="Pause"):
+            play_pause_button.configure(text="Pause")
 
     elif song_index >= len(music_folder_path) - 1 and repeat_song == repeat_options["PLAYLIST"]:
         song_index = 0
         media = instance.media_new(music_folder_path[song_index])
         player.set_media(media)
         player.play()
-        play_pause_button.configure(text="Pause")
-    
-    
-        
+        if not play_pause_button.configure(text="Pause"):
+            play_pause_button.configure(text="Pause")
     else:
         pass
-
 
 def previous_song(next_button, play_pause_button):
     global song_index
@@ -127,7 +125,8 @@ def previous_song(next_button, play_pause_button):
         media = instance.media_new(music_folder_path[song_index])
         player.set_media(media)
         player.play()
-        play_pause_button.configure(text="Pause")
+        if not play_pause_button.configure(text="Pause"):
+            play_pause_button.configure(text="Pause")
 
         if song_index < len(music_folder_path) - 1:
             next_button.configure(state=ctk.NORMAL)
