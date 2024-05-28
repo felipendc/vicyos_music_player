@@ -21,7 +21,7 @@ def init_music_player():
     # Creating VLC instance
     global instance, player
     instance = vlc.Instance()
-
+    
     # Creating VLC media player
     player = instance.media_player_new()
 
