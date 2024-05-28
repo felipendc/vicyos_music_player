@@ -15,13 +15,20 @@ pause_music = False
 stop_music = False
 music_folder_path = []
 song_index = 0
+playback_speed_list = ["1.6", "1.5", "1.4", "1.3", "1.2", "1.1", "1.0", "0.99", "0.98", "0.97", "0.96", "0.95", "0.94", "0.93", "0.92", "0.91", "0.90"]
+playback_speed_var = 1.0
 
+
+def playback_speed(choice):
+    global playback_speed_var 
+    playback_speed_var = float(choice)
+    
 
 def init_music_player():
     # Creating VLC instance
     global instance, player
     instance = vlc.Instance()
-    
+
     # Creating VLC media player
     player = instance.media_player_new()
 
@@ -171,6 +178,9 @@ def repeat_checker(root, play_pause_button, next_button, previous_button):
     global music_folder_path, repeat_song, stop_music
     print(pause_music)
     print(repeat_song)
+    
+    player.set_rate(playback_speed_var)
+    print(f"CURRENT SPEED RATE: {playback_speed_var}")
 
     if song_index == 0:
         previous_button.configure(state=ctk.DISABLED)
