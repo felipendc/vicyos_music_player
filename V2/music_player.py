@@ -107,7 +107,7 @@ def next_song(play_pause_button):
         pause_music == False
         if not play_pause_button.configure(text="Pause"):
             play_pause_button.configure(text="Pause")
-
+    
     elif song_index >= len(music_folder_path) - 1 and repeat_song == repeat_options["PLAYLIST"]:
         song_index = 0
         media = instance.media_new(music_folder_path[song_index])
@@ -202,10 +202,9 @@ def repeat_checker(root, play_pause_button, next_button, previous_button):
 
     if player.get_state() == vlc.State.Ended and pause_music == False:
         if repeat_song == repeat_options["PLAYLIST"]:
-            
             print("TESTING... PLAYLIST")
-            if len(music_folder_path) > 0 and not stop_music:
-                next_song()
+            if len(music_folder_path) > 0 and stop_music == False:
+                next_song(play_pause_button)
             print(repeat_song) # Printing to debug the code!
         elif repeat_song == repeat_options["CURRENT"]:
             print("TESTING... CURRENT")
