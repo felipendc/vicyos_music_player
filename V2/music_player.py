@@ -98,13 +98,14 @@ def open_folder(filedialog, play_pause_button, stop_button, next_button, previou
 
 
 def next_song(play_pause_button):
-    global song_index
+    global song_index, stop_music, pause_music
     if song_index < len(music_folder_path) - 1:
         song_index += 1
         media = instance.media_new(music_folder_path[song_index])
         player.set_media(media)
         player.play()
-        pause_music == False
+        pause_music = False
+        stop_music = False
         if not play_pause_button.configure(text="Pause"):
             play_pause_button.configure(text="Pause")
     
@@ -119,30 +120,30 @@ def next_song(play_pause_button):
         pass
 
 def previous_song(next_button, play_pause_button):
-    global song_index
+    global song_index, stop_music
     if song_index > 0:
         song_index -= 1
         media = instance.media_new(music_folder_path[song_index])
         player.set_media(media)
         player.play()
+        stop_music = False
         if not play_pause_button.configure(text="Pause"):
             play_pause_button.configure(text="Pause")
 
         if song_index < len(music_folder_path) - 1:
             next_button.configure(state=ctk.NORMAL)
-  
-        
+
     else:
         song_index = 0
 
 
 def on_button_play_or_pause(play_pause_button):
-    global pause_music, music_folder_path, stop_music, instance
-
+    global pause_music, music_folder_path, stop_music
 
     if player.get_state() == vlc.State.Playing:
         player.pause()
         pause_music = True
+        stop_music = False
         play_pause_button.configure(text="Play")
 
     elif player.get_state() == vlc.State.Paused:
@@ -158,7 +159,6 @@ def on_button_play_or_pause(play_pause_button):
         play_pause_button.configure(text="Pause")
 
 
-        
 def on_button_stop(play_pause_button):
     global pause_music, stop_music
     player.stop()
@@ -167,19 +167,8 @@ def on_button_stop(play_pause_button):
     play_pause_button.configure(text="Start Playing the song")
 
 
-def check_music():
-    global music_folder_path
-    
-    if player.get_state() == vlc.State.Ended and pause_music == False:
-        print("There is nothing being played at the moment...")
-    elif player.get_state() == vlc.State.Ended and pause_music == True:
-        print("The song is currently paused!")
-    else:
-        print("There is a song being played at the moment...")
-
-
 def repeat_checker(root, play_pause_button, next_button, previous_button):
-    global music_folder_path, repeat_song
+    global music_folder_path, repeat_song, stop_music
     print(pause_music)
     print(repeat_song)
 
