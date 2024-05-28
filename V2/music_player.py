@@ -216,6 +216,8 @@ def repeat_checker(root, play_pause_button, next_button, previous_button):
         elif repeat_song == repeat_options["NONE"]:
             print("TESTING... NONE")
             if len(music_folder_path) > 0:
+                player.stop()
+                stop_music = True
                 play_pause_button.configure(text="Play")
                 pass
 
