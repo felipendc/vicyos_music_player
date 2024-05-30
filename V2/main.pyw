@@ -69,24 +69,24 @@ root.title("Vicyos Music Player")
 root.geometry("300x570")
 
 
-play_pause_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Start Playing the song", command=on_play_or_pause, state=ctk.DISABLED)
-play_pause_button.pack(pady=16)
+play_pause_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Play", command=on_play_or_pause, state=ctk.DISABLED)
+play_pause_button.pack(pady=14)
 
 stop_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Stop", command=on_stop, state=ctk.DISABLED)
-stop_button.pack(pady=16)
+stop_button.pack(pady=14)
 
 open_files_default = ctk.StringVar(value="Open Folder")
 open_files_option_menu = ctk.CTkOptionMenu(root, values=["Open Folder", "Open File(s)", "Add to Playlist"], variable=open_files_default, command=on_optionmenu_callback)
-open_files_option_menu.pack(pady=16)
+open_files_option_menu.pack(pady=14)
 
 next_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Next", command=on_next_song, state=ctk.DISABLED)
-next_button.pack(pady=16)
+next_button.pack(pady=14)
 
 previous_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Previous", command=on_previous_song, state=ctk.DISABLED)
-previous_button.pack(pady=16)
+previous_button.pack(pady=14)
 
 repeat_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Repeat mode: Off", command=on_repeat_button_label, state=ctk.DISABLED)
-repeat_button.pack(pady=16)
+repeat_button.pack(pady=14)
 
 spaced_box_label = ctk.CTkLabel(root, text="", fg_color="transparent")
 spaced_box_label.pack(pady=0)
