@@ -246,8 +246,22 @@ def on_button_stop(play_pause_button):
 def repeat_checker(root, play_pause_button, next_button, previous_button):
     global music_folder_path, repeat_song, stop_music
     
-    if player.get_state() == vlc.State.Playing:
-        print(player.get_time())
+    if player.get_state() == vlc.State.Playing or player.get_state() == vlc.State.Paused:
+        current_time = player.get_time() / 1000
+        current_time_min = int(current_time // 60)
+        current_time_secs = int(current_time % 60)
+        print(f"Current Time: {current_time_min} minutes and {current_time_secs} seconds.")
+    else:
+        print(f"Audio Length: 0 minutes and 0 seconds.")
+
+    if player.get_state() == vlc.State.Playing or player.get_state() == vlc.State.Paused:
+        # Convert seconds to minutes and seconds
+        media_length_seconds = player.get_length() / 1000
+        minutes = int(media_length_seconds // 60)
+        seconds = int(media_length_seconds % 60)
+        print(f"Audio Length: {minutes} minutes and {seconds} seconds.")
+
+        
     
     print(f"CURRENT SPEED RATE: {playback_speed_var}")
 
