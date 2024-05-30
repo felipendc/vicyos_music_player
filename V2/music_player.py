@@ -282,7 +282,7 @@ def repeat_checker(root, play_pause_button, next_button, previous_button):
         print(f"Audio Length: {minutes} minutes and {seconds} seconds.")
 
         
-    
+    player.set_rate(playback_speed_var)
     print(f"CURRENT SPEED RATE: {playback_speed_var}")
 
     if song_index == 0:
