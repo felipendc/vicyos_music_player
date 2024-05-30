@@ -19,11 +19,16 @@ playback_speed_list = ["1.6", "1.5", "1.4", "1.3", "1.2", "1.1", "1.0", "0.99", 
 playback_speed_var = 1.0
 
 
+def rewind():
+    player.set_time(player.get_time() - 5000)
+
+def forward():
+    player.set_time(player.get_time() + 5000)
+
 def playback_speed(choice):
     global playback_speed_var 
     playback_speed_var = float(choice)
     
-
 def init_music_player():
     # Creating VLC instance
     global instance, player
@@ -32,7 +37,7 @@ def init_music_player():
     # Creating VLC media player
     player = instance.media_player_new()
 
-def add_to_playlist(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu):
+def add_to_playlist(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu, set_time_rewind_button, set_time_skip_forward_button):
     global music_folder_path, song_index
 
     dialog_title = "Open"
@@ -89,10 +94,12 @@ def add_to_playlist(filedialog, play_pause_button, stop_button, next_button, pre
         previous_button.configure(state=ctk.NORMAL)
         repeat_button.configure(state=ctk.NORMAL)
         open_files_option_menu.configure( fg_color=("#666666"), button_color="#444444", button_hover_color="#888888")
+        set_time_rewind_button.configure(state=ctk.NORMAL)
+        set_time_skip_forward_button.configure(state=ctk.NORMAL)
+        
 
 
-
-def open_songs(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu):
+def open_songs(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu, set_time_rewind_button, set_time_skip_forward_button):
     global music_folder_path, song_index
 
     dialog_title = "Open"
@@ -123,11 +130,13 @@ def open_songs(filedialog, play_pause_button, stop_button, next_button, previous
             previous_button.configure(state=ctk.NORMAL)
             repeat_button.configure(state=ctk.NORMAL)
             open_files_option_menu.configure( fg_color=("#666666"), button_color="#444444", button_hover_color="#888888")
+            set_time_rewind_button.configure(state=ctk.NORMAL)
+            set_time_skip_forward_button.configure(state=ctk.NORMAL)
         else:
             pass
 
 
-def open_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu):
+def open_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu, set_time_rewind_button, set_time_skip_forward_button):
     global music_folder_path, song_index
 
     dialog_title = "Select a Directory"
@@ -157,7 +166,9 @@ def open_folder(filedialog, play_pause_button, stop_button, next_button, previou
             next_button.configure(state=ctk.NORMAL)
             previous_button.configure(state=ctk.NORMAL)
             repeat_button.configure(state=ctk.NORMAL)
-            open_files_option_menu.configure( fg_color=("#666666"), button_color="#444444", button_hover_color="#888888",)
+            open_files_option_menu.configure( fg_color=("#666666"), button_color="#444444", button_hover_color="#888888")
+            set_time_rewind_button.configure(state=ctk.NORMAL)
+            set_time_skip_forward_button.configure(state=ctk.NORMAL)
     else:
         pass
 
@@ -234,10 +245,10 @@ def on_button_stop(play_pause_button):
 
 def repeat_checker(root, play_pause_button, next_button, previous_button):
     global music_folder_path, repeat_song, stop_music
-    print(pause_music)
-    print(repeat_song)
     
-    player.set_rate(playback_speed_var)
+    if player.get_state() == vlc.State.Playing:
+        print(player.get_time())
+    
     print(f"CURRENT SPEED RATE: {playback_speed_var}")
 
     if song_index == 0:
@@ -256,6 +267,7 @@ def repeat_checker(root, play_pause_button, next_button, previous_button):
 
     if repeat_song == repeat_options["PLAYLIST"] and song_index > len(music_folder_path) - 2:
         next_button.configure(state=ctk.NORMAL)
+
 
     if player.get_state() == vlc.State.Ended and pause_music == False:
         if repeat_song == repeat_options["PLAYLIST"]:

@@ -14,13 +14,13 @@ import music_player
 music_player.init_music_player()
 
 def on_select_folder():
-    music_player.open_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu)
+    music_player.open_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu, set_time_rewind_button, set_time_skip_forward_button)
 
 def on_select_songs():
-    music_player.open_songs(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu)
+    music_player.open_songs(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu, set_time_rewind_button, set_time_skip_forward_button)
 
 def on_add_to_playlist():
-    music_player.add_to_playlist(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu)
+    music_player.add_to_playlist(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu, set_time_rewind_button, set_time_skip_forward_button)
 
 def on_play_or_pause():
     music_player.on_button_play_or_pause(play_pause_button)
@@ -57,11 +57,16 @@ def on_speed_combobox_callback(choice):
 def on_choose_playback_speed():
     return music_player.playback_speed_list
 
+def on_rewind():
+    music_player.rewind()
+
+def on_forward():
+    music_player.forward()
 
 ctk.set_appearance_mode("dark") # Set dark mode theme globally
 root = ctk.CTk()
 root.title("Vicyos Music Player")
-root.geometry("300x480")
+root.geometry("300x570")
 
 
 play_pause_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Start Playing the song", command=on_play_or_pause, state=ctk.DISABLED)
@@ -86,11 +91,17 @@ repeat_button.pack(pady=16)
 spaced_box_label = ctk.CTkLabel(root, text="", fg_color="transparent")
 spaced_box_label.pack(pady=0)
 playback_speed_label = ctk.CTkLabel(root, text="Speed Rate:", fg_color="transparent")
-playback_speed_label.pack(pady=3)
+playback_speed_label.pack(pady=0, expand=False)
 speed_combobox_var = ctk.StringVar(value="1.0")
 playback_speed_combobox = ctk.CTkComboBox(root, variable=speed_combobox_var, values=on_choose_playback_speed(),
                                      command=on_speed_combobox_callback)
-playback_speed_combobox.pack(pady=0)
+playback_speed_combobox.pack(pady=5)
 
+set_time_rewind_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Rewind 5 seconds", command=on_rewind, state=ctk.DISABLED)
+set_time_rewind_button.pack(pady=5 )
+
+set_time_skip_forward_button = ctk.CTkButton(root,  fg_color="#444444", hover_color="#555555", text="Forward 5 seconds", command=on_forward, state=ctk.DISABLED)
+set_time_skip_forward_button.pack(pady=5)
+# Rewind and skip forward
 root.after(1000, lambda: music_player.repeat_checker(root, play_pause_button, next_button, previous_button))
 root.mainloop()
