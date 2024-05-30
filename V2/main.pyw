@@ -31,7 +31,7 @@ def on_right_arrow_pressed(event):
 
 def on_space_pressed(event):
     print("button was pressed")
-    music_player.space_pressed(play_pause_button)
+    music_player.on_button_play_or_pause(play_pause_button)
 
 def on_select_folder():
     music_player.open_folder(filedialog, play_pause_button, stop_button, next_button, previous_button, repeat_button, open_files_option_menu, set_time_rewind_button, set_time_skip_forward_button)
@@ -131,4 +131,5 @@ root.bind("<Left>", on_left_arrow_pressed)
 root.bind("<Right>", on_right_arrow_pressed)
 root.bind("<Up>", on_up_arrow_pressed)
 root.bind("<Down>", on_down_arrow_pressed)
+
 root.mainloop()
