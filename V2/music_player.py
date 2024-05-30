@@ -260,7 +260,7 @@ def on_button_stop(play_pause_button):
     player.stop()
     pause_music = False
     stop_music = True
-    play_pause_button.configure(text="Start Playing the song")
+    play_pause_button.configure(text="Play")
 
 
 def repeat_checker(root, play_pause_button, next_button, previous_button):
