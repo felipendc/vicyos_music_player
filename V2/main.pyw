@@ -123,7 +123,7 @@ set_time_rewind_button.pack(pady=5 )
 set_time_skip_forward_button = ctk.CTkButton(root,  fg_color="#444444", hover_color="#555555", text="Forward 5 seconds", command=on_forward, state=ctk.DISABLED)
 set_time_skip_forward_button.pack(pady=5)
 # Rewind and skip forward
-root.after(1000, lambda: music_player.repeat_checker(root, play_pause_button, next_button, previous_button))
+root.after(500, lambda: music_player.repeat_checker(root, play_pause_button, next_button, previous_button))
 
 # Bind the space key press event to the function space_pressed
 root.bind("<space>", on_space_pressed)
