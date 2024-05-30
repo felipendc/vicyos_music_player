@@ -325,7 +325,7 @@ def repeat_checker(root, play_pause_button, next_button, previous_button):
                 pass
 
             print(repeat_song) # Printing to debug the code!
-    root.after(1000, lambda: repeat_checker(root, play_pause_button, next_button, previous_button))
+    root.after(500, lambda: repeat_checker(root, play_pause_button, next_button, previous_button))
         
 
 def repeat_button_label(repeat_button):
