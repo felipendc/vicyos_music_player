@@ -15,12 +15,6 @@ import music_player
 # Initialize the music player
 music_player.init_music_player()
 
-def on_up_arrow_pressed(event):
-    music_player.increase_volume()
-
-def on_down_arrow_pressed(event):
-    music_player.decrease_volume()
-
 def on_left_arrow_pressed(event):
     music_player.rewind()
     print("Left arrow key pressed")
@@ -129,6 +123,4 @@ root.after(1000, lambda: music_player.repeat_checker(root, play_pause_button, ne
 root.bind("<space>", on_space_pressed)
 root.bind("<Left>", on_left_arrow_pressed)
 root.bind("<Right>", on_right_arrow_pressed)
-root.bind("<Up>", on_up_arrow_pressed)
-root.bind("<Down>", on_down_arrow_pressed)
 root.mainloop()

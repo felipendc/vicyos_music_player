@@ -1,9 +1,6 @@
 # music_player.py
 import vlc, os
 import customtkinter as ctk
-from ctypes import cast, POINTER
-from comtypes import CLSCTX_ALL
-from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
 
 
 repeat_options = {
@@ -21,23 +18,6 @@ song_index = 0
 playback_speed_list = ["1.6", "1.5", "1.4", "1.3", "1.2", "1.1", "1.0", "0.99", "0.98", "0.97", "0.96", "0.95", "0.94", "0.93", "0.92", "0.91", "0.90"]
 playback_speed_var = 1.0
 
-
-def increase_volume():
-    devices = AudioUtilities.GetSpeakers()
-    interface = devices.Activate(
-        IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
-    volume = cast(interface, POINTER(IAudioEndpointVolume))
-    current_volume = volume.GetMasterVolumeLevelScalar()
-    volume.SetMasterVolumeLevelScalar(min(1.0, current_volume + 0.1), None)  # Increase by 10%, ensuring it doesn't exceed 1.0
-
-# Function to decrease the system volume
-def decrease_volume():
-    devices = AudioUtilities.GetSpeakers()
-    interface = devices.Activate(
-        IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
-    volume = cast(interface, POINTER(IAudioEndpointVolume))
-    current_volume = volume.GetMasterVolumeLevelScalar()
-    volume.SetMasterVolumeLevelScalar(max(0.0, current_volume - 0.1), None)  # Decrease by 10%, ensuring it doesn't go below 0.0
 
 def rewind():
     player.set_time(player.get_time() - 5000)
