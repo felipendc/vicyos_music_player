@@ -138,7 +138,7 @@ def open_songs(filedialog, play_pause_button, stop_button, next_button, previous
         music_folder_path = selected_songs
 
         if len(music_folder_path) > 0:
-            print(music_folder_path)
+            # print(music_folder_path)
             song_index = 0
             media = instance.media_new(music_folder_path[song_index])
             player.set_media(media)
@@ -169,13 +169,13 @@ def open_folder(filedialog, play_pause_button, stop_button, next_button, previou
         for root_, dirs, files in os.walk(directory):
             for file in files:
                 for suported_extensions in suported_files_extensions:
-                    print(suported_extensions)
+                    # print(suported_extensions)
                     if os.path.splitext(file)[1].lower() == suported_extensions:
                         path = (root_ + "/" + file).replace("\\", "/")
                         music_folder_path.append(path)
                     
         if len(music_folder_path) > 0:
-            print(music_folder_path)
+            # print(music_folder_path)
             song_index = 0
             media = instance.media_new(music_folder_path[song_index])
             player.set_media(media)
@@ -288,11 +288,8 @@ def repeat_checker(root, play_pause_button, next_button, previous_button, curren
         current_timestamp_label.configure(text=f"Current Time: 00:00")
         song_lenght_label.configure(text=f"Full lenght: 00:00")
 
-        print(f"Audio Length: 0 minutes and 0 seconds.")
-
         
     player.set_rate(playback_speed_var)
-    print(f"CURRENT SPEED RATE: {playback_speed_var}")
 
     if song_index == 0:
         previous_button.configure(state=ctk.DISABLED)
@@ -311,47 +308,44 @@ def repeat_checker(root, play_pause_button, next_button, previous_button, curren
     if repeat_song == repeat_options["PLAYLIST"] and song_index > len(music_folder_path) - 2:
         next_button.configure(state=ctk.NORMAL)
 
-
     if player.get_state() == vlc.State.Ended and pause_music == False:
         if repeat_song == repeat_options["PLAYLIST"]:
-            print("TESTING... PLAYLIST")
+          
             if len(music_folder_path) > 0 and stop_music == False:
                 next_song(play_pause_button)
-            print(repeat_song) # Printing to debug the code!
+
         elif repeat_song == repeat_options["CURRENT"]:
-            print("TESTING... CURRENT")
+
             if len(music_folder_path) > 0:
                 media = instance.media_new(music_folder_path[song_index])
                 player.set_media(media)
                 player.play()
-            print(repeat_song) # Printing to debug the code!
+            # Printing to debug the code!
         elif repeat_song == repeat_options["NONE"]:
-            print("TESTING... NONE")
             if len(music_folder_path) > 0:
                 player.stop()
                 stop_music = True
                 play_pause_button.configure(text="Play")
                 pass
 
-            print(repeat_song) # Printing to debug the code!
     root.after(500, lambda: repeat_checker(root, play_pause_button, next_button, previous_button, current_timestamp_label, song_lenght_label ))
         
 
 def repeat_button_label(repeat_button):
     global repeat_song
     if repeat_song == repeat_options["NONE"]:
-        print(repeat_song) # Printing to debug the code!
+        # print(repeat_song) # Printing to debug the code!
         repeat_button.configure(text="Repeat: Current song")
         repeat_song = repeat_options["CURRENT"]
-        print(repeat_song) # Printing to debug the code!
+        # print(repeat_song) # Printing to debug the code!
     elif repeat_song == repeat_options["CURRENT"]:
-        print(repeat_song) # Printing to debug the code!
+        # print(repeat_song) # Printing to debug the code!
         repeat_button.configure(text="Repeat: Playlist")
         repeat_song = repeat_options["PLAYLIST"]
-        print(repeat_song) # Printing to debug the code!
+        # print(repeat_song) # Printing to debug the code!
     elif repeat_song == repeat_options["PLAYLIST"]:
-        print(repeat_song) # Printing to debug the code!
+        # print(repeat_song) # Printing to debug the code!
         repeat_button.configure(text="Repeat mode: Off")
         repeat_song = repeat_options["NONE"]
-        print(repeat_song) # Printing to debug the code!
+        # print(repeat_song) # Printing to debug the code!
 
