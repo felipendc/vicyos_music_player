@@ -263,23 +263,32 @@ def on_button_stop(play_pause_button):
     play_pause_button.configure(text="Play")
 
 
-def repeat_checker(root, play_pause_button, next_button, previous_button):
+def repeat_checker(root, play_pause_button, next_button, previous_button, current_timestamp_label, song_lenght_label):
     global music_folder_path, repeat_song, stop_music
+
+    
+    
+    
     
     if player.get_state() == vlc.State.Playing or player.get_state() == vlc.State.Paused:
+        # Convert seconds to minutes and seconds
         current_time = player.get_time() / 1000
         current_time_min = int(current_time // 60)
         current_time_secs = int(current_time % 60)
-        print(f"Current Time: {current_time_min} minutes and {current_time_secs} seconds.")
-    else:
-        print(f"Audio Length: 0 minutes and 0 seconds.")
+        print(f"Current Time: {current_time_min:02} minutes and {current_time_secs:02} seconds.")
+        current_timestamp_label.configure(text=f"Current time: {current_time_min:02}:{current_time_secs:02}")
 
-    if player.get_state() == vlc.State.Playing or player.get_state() == vlc.State.Paused:
-        # Convert seconds to minutes and seconds
         media_length_seconds = player.get_length() / 1000
-        minutes = int(media_length_seconds // 60)
-        seconds = int(media_length_seconds % 60)
-        print(f"Audio Length: {minutes} minutes and {seconds} seconds.")
+        song_lenght_minutes = int(media_length_seconds // 60)
+        song_lenght_seconds = int(media_length_seconds % 60)
+        song_lenght_label.configure(text=f"Full lenght:  {song_lenght_minutes:02}:{song_lenght_seconds:02}")
+        print(f"Audio Length: {song_lenght_minutes:02} minutes and {song_lenght_seconds:02} seconds.")
+
+    else:
+        current_timestamp_label.configure(text=f"Current Time: 00:00")
+        song_lenght_label.configure(text=f"Full lenght: 00:00")
+
+        print(f"Audio Length: 0 minutes and 0 seconds.")
 
         
     player.set_rate(playback_speed_var)
@@ -325,7 +334,7 @@ def repeat_checker(root, play_pause_button, next_button, previous_button):
                 pass
 
             print(repeat_song) # Printing to debug the code!
-    root.after(500, lambda: repeat_checker(root, play_pause_button, next_button, previous_button))
+    root.after(500, lambda: repeat_checker(root, play_pause_button, next_button, previous_button, current_timestamp_label, song_lenght_label ))
         
 
 def repeat_button_label(repeat_button):
