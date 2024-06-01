@@ -87,6 +87,8 @@ ctk.set_appearance_mode("dark") # Set dark mode theme globally
 root = ctk.CTk()
 root.title("Vicyos Music Player")
 root.geometry("285x555")
+root.resizable(False, False)  # Disables both horizontal and vertical resizing
+root.geometry
 
 
 play_pause_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Play", command=on_play_or_pause, state=ctk.DISABLED)
