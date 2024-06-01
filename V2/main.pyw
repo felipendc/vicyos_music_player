@@ -86,27 +86,27 @@ def on_forward():
 ctk.set_appearance_mode("dark") # Set dark mode theme globally
 root = ctk.CTk()
 root.title("Vicyos Music Player")
-root.geometry("300x570")
+root.geometry("285x555")
 
 
 play_pause_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Play", command=on_play_or_pause, state=ctk.DISABLED)
-play_pause_button.pack(pady=14)
+play_pause_button.pack(pady=12)
 
 stop_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Stop", command=on_stop, state=ctk.DISABLED)
-stop_button.pack(pady=14)
+stop_button.pack(pady=12)
 
 open_files_default = ctk.StringVar(value="Open Folder")
 open_files_option_menu = ctk.CTkOptionMenu(root, values=["Open Folder", "Open File(s)", "Add to Playlist"], variable=open_files_default, command=on_optionmenu_callback)
-open_files_option_menu.pack(pady=14)
+open_files_option_menu.pack(pady=12)
 
 next_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Next", command=on_next_song, state=ctk.DISABLED)
-next_button.pack(pady=14)
+next_button.pack(pady=12)
 
 previous_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Previous", command=on_previous_song, state=ctk.DISABLED)
-previous_button.pack(pady=14)
+previous_button.pack(pady=12)
 
 repeat_button = ctk.CTkButton(root, fg_color="#444444", hover_color="#555555", text="Repeat mode: Off", command=on_repeat_button_label, state=ctk.DISABLED)
-repeat_button.pack(pady=14)
+repeat_button.pack(pady=12)
 
 spaced_box_label = ctk.CTkLabel(root, text="", fg_color="transparent")
 spaced_box_label.pack(pady=0)
@@ -124,10 +124,10 @@ set_time_skip_forward_button = ctk.CTkButton(root,  fg_color="#444444", hover_co
 set_time_skip_forward_button.pack(pady=5)
 
 current_timestamp_label = ctk.CTkLabel(root, text="Current time: 00:00", fg_color="transparent")
-current_timestamp_label.pack(pady=0)
+current_timestamp_label.pack(pady=1)
 
 song_lenght_label = ctk.CTkLabel(root, text="Full lenght: 00:00", fg_color="transparent")
-song_lenght_label.pack(pady=0)
+song_lenght_label.pack(pady=1)
 # Rewind and skip forward
 root.after(500, lambda: music_player.repeat_checker(root, play_pause_button, next_button, previous_button, current_timestamp_label, song_lenght_label))
 
